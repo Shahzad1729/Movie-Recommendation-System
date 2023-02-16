@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Mate | Movie</title>
+
+    <!-- Bootstrap stylesheet  -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- font-awesome -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <!-- Select2 stylesheet -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
+    <!-- Local stylesheets  -->
+    <link rel="stylesheet" href="../static/css/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <style>
+        .row__poster {
+    width: 100%;
+    object-fit: contain;
+    max-height: 100px;
+    margin-right: 10px;
+    transition: transform 450ms;
+  }
+  
+  .row__posters {
+    display: flex;
+    overflow-y: hidden;
+    overflow-x: scroll;
+    padding: 20px;
+    margin-top:50px
+  }
+  
+  .row__poster:hover {
+    transform: scale(1.08);
+  }
+  
+  .row__posters::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .row__posterLarge {
+    max-height: 300px;
+  }
+  
+  .row__posterLarge:hover {
+    transform: scale(1.09);
+  }
+  
+  .rowt {
+    color: white;
+    margin-left: 20px;
+  }
+  
+  /* banner */
+  .banner {
+    background-size: cover;
+    background-position: center center;
+    color: white;
+    object-fit: contain;
+    height: 448px;
+  }
+  
+  .banner__contents {
+    margin-left: 30px;
+    padding-top: 140px;
+    height: 190px;
+  }
+  
+  .banner__title {
+    font-size: 3rem;
+    font-weight: 800;
+    padding-bottom: 0.3rem;
+  }
+  
+  .banner__description {
+    width: 45rem;
+    line-height: 1.3;
+    padding-top: 1rem;
+    font-size: 0.8rem;
+    max-width: 360px;
+    height: 180px;
+  }
+  
+  .banner__button {
+    cursor: text;
+    color: #fff;
+    outline: none;
+    border: none;
+    font-weight: 700;
+    border-radius: 0.2vw;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    margin-right: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    background-color: rgba(51, 51, 51, 0.5);
+  }
+  
+  .banner__button:hover {
+    color: #000;
+    background-color: #e6e6e6;
+    transition: all 0.2s;
+  }
+  
+  .banner--fadeBottom {
+    margin-top: 145px;
+    height: 7.4rem;
+    background-image: linear-gradient(180deg, transparent, rgba(37, 37, 37, 0.61), #111);
+  }
+    </style>
+</head>
+<body class="bg-zinc-900">
+
+    <!-- Header -->
+    <nav class="navbar">
+        <a href="/recommendations" class="left" style="text-decoration: none;">
+            <span class="animate-charcter">Movie Mate</span>
+        </a>
+        <div class="right-container">
+            <select id="movieSelect" class="select2 form-control" onchange="indmovieSelect()" style="width: 280px;">
+                <option disabled hidden selected value="sm" id="search-movie">Search Movie</option>
+                {% for item in movie_names %}
+                <option value={{item}}>{{item}}</option>
+                {% endfor %}
+            </select>
+            <i class="fa fa-search"></i>
+        </div>
+        <a href="/logout" data-toggle="tooltip" title="Logout">
+            <img src="https://www.hotstar.com/assets/c724e71754181298e3f835e46ade0517.svg" alt="User logout" width="40px">
+        </a>
+    </nav>
+  <!-- Movie Section -->
+    <!-- <div class="container-fluid">
+        <div class="row movie-box mt-3">
+            <div class="movie-text col-md-4">
+                <div class="d-flex mx-auto">
+                    <div class="text-wrapper">
+                        <h1>{{current_movie}}</h1>  
+                        <h4>{{current_movie_genre}}</h2>
+                        <h3>{{current_movie_release_date}}</h2>
+                        <p>{{current_movie_overview}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="movie-vid col-md-8 d-none d-md-block">  
+                <img src={{ current_movie_poster}} alt="" class="center" width="500px" height="550px">
+            </div>
+        </div>
+    </div> -->
+        <div class="container px-5 py-24 mx-auto">
+          <div class="lg:w-4/5 mx-auto flex flex-wrap">
+            <img alt="ecommerce" class="lg:w-2/6 md:w-3/6 w-5/6 mb-9 object-cover object-center rounded" src="{{current_movie_poster}}">
+            <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+              <h2 class="text-sm title-font text-gray-500 tracking-widest">Movie Name</h2>
+              <h1 class="text-slate-100 text-3xl title-font font-medium mb-1">{{current_movie}}</h1>
+              <div class="flex mb-4">
+                <span class="flex items-center">
+                  <span class="text-slate-100 ml-3 font-weight-bold">{{current_movie_release_date}}</span>
+                </span>
+                <span class="flex ml-3 pl-3 py-2 border-l-2 border-gray-200 space-x-2s">
+                  {% for i in current_movie_genre %}
+                  <span class="text-slate-100 ml-3 font-weight-bold">{{i}}</span>
+                  {% endfor %}
+                </span>
+              </div>
+               <h2 class="text-sm title-font text-gray-500 tracking-widest">Starring</h2>
+                {% for i in current_movie_cast %}
+                <span class="text-slate-100 ml-3 font-weight-bold" style="font-size: small;">{{i}}</span>
+                {% endfor %}
+                <br>
+              <p class="leading-relaxed text-slate-100 font-weight-bold" style="margin-top: 50px;">{{current_movie_overview}}</p>
+            </div>
+          </div>
+        </div>
+
+
+    <!-- Recommendations Section -->
+    <div class="container-fluid mb-3">
+
+        <div class="row">
+            <h4 class="title">More Like This</h4>
+        </div>
+
+        <div class="row movie-list">
+            {%for i in range(0, 6)%}
+            <div class="col-6 col-sm-4 col-md-2 movie-card">
+                <a href="{{recommendations[i]}}">
+                    <img src={{poster[i]}} class="card-img" alt="">
+                    <p class="text-contain">{{recommendations[i]}}</p>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="container-fluid footer">
+        <h6 class="text-center"> &#169; 2023 Movie Mate - Designed and Developed by Shahzad, Avez, Kashif and Bhavesh  </h6>
+    </div>
+
+
+
+    <!-- JS/jQuery files  -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <!-- Select 2 script -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
+    <!-- Local JS files  -->
+    <script src="../static/js/script.js"></script>
+
+</body>
+</html>
