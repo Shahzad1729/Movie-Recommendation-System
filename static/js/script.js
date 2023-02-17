@@ -1,4 +1,5 @@
-  const baseUrl = "https://movie-recommendation-system-t8uj.onrender.com/"
+  //const baseUrl = "https://movie-recommendation-system-t8uj.onrender.com/"  for Render Deployment
+const baseUrl = "https://moviemate.up.railway.app/"
 var url = baseUrl
 
 // Header
